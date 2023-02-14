@@ -3102,17 +3102,17 @@ __metadata:
   linkType: soft
 
 "@backstage/catalog-model@npm:^1.1.2, @backstage/catalog-model@npm:^1.1.3":
-  version: 1.1.3
-  resolution: "@backstage/catalog-model@npm:1.1.3"
+  version: 1.2.0
+  resolution: "@backstage/catalog-model@npm:1.2.0"
   dependencies:
-    "@backstage/config": ^1.0.4
-    "@backstage/errors": ^1.1.3
-    "@backstage/types": ^1.0.1
+    "@backstage/config": ^1.0.6
+    "@backstage/errors": ^1.1.4
+    "@backstage/types": ^1.0.2
     ajv: ^8.10.0
     json-schema: ^0.4.0
     lodash: ^4.17.21
     uuid: ^8.0.0
-  checksum: 51e6821be44201d012550d7429cf4dc278fdd7dc001f4f5f6339a44a7e4dc155fbd44105d0dd96ea07b409fe93cd113a5a67370a758dfd368ab7b8e18d37ee6a
+  checksum: d4e07e91e501b4ecbc9d0b754518277dd2ed93f22f801740cc539dbcbd905ba8111b1651d20fb725e44d7cd99a96faec6fd56cd51fdf8e1d7f39a6e177f31efa
   languageName: node
   linkType: hard
 
@@ -3337,6 +3337,16 @@ __metadata:
     "@backstage/types": ^1.0.1
     lodash: ^4.17.21
   checksum: f18e1afa024a752fc2667e2d0e54eadedfab231d9346a0fc8f8c0a5a5c04138ac1814209d89b43ec50f14309a76ad77f16213116675122fecc00bf085236d83e
+  languageName: node
+  linkType: hard
+
+"@backstage/config@npm:^1.0.6":
+  version: 1.0.6
+  resolution: "@backstage/config@npm:1.0.6"
+  dependencies:
+    "@backstage/types": ^1.0.2
+    lodash: ^4.17.21
+  checksum: 5cd2b409237091eb523a61c11df49c183ad1548dce90df343c9b0204eec7147508f41c832f931f82783c458ccdcc9d9fb73511cdd373fdb023db67bc738fcc67
   languageName: node
   linkType: hard
 
@@ -3672,6 +3682,17 @@ __metadata:
     cross-fetch: ^3.1.5
     serialize-error: ^8.0.1
   checksum: 7d5d68ea79c179557f494fd83e9e457621d417d2b785378c8494ab441271cf541f4c0952f5afcb8dade1a51e715c5da5d926ed3154af54868b60b6c1d4cc0cf4
+  languageName: node
+  linkType: hard
+
+"@backstage/errors@npm:^1.1.4":
+  version: 1.1.4
+  resolution: "@backstage/errors@npm:1.1.4"
+  dependencies:
+    "@backstage/types": ^1.0.2
+    cross-fetch: ^3.1.5
+    serialize-error: ^8.0.1
+  checksum: 1f0915a29fbeeff0e7fb82f1b4858248d99e9fa6a1aec65d617a241fab812f7939ec418ef0751370833753a2ee2c989463c5e26b40d7ea6aa297e5b6aee96584
   languageName: node
   linkType: hard
 
@@ -8006,6 +8027,13 @@ __metadata:
   version: 1.0.1
   resolution: "@backstage/types@npm:1.0.1"
   checksum: 4857bc916f6afb77516fee565bb8048f2110425e32621ae7f332b9b9d32a738df26886b641339e811f3342488d44383c7a2fdd799de897b08fcca2062f1a9a13
+  languageName: node
+  linkType: hard
+
+"@backstage/types@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "@backstage/types@npm:1.0.2"
+  checksum: 3fead10cfafa3d1a6490e664b52f383fa1bc2cc28cb4b63f2df9a299c654b1c7103c556f652eb8ebf17ca09133f841c75317a8215875c7701eb04737410d8321
   languageName: node
   linkType: hard
 
