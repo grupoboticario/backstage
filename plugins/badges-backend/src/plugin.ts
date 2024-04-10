@@ -38,6 +38,8 @@ export const badgesPlugin = createBackendPlugin({
         tokenManager: coreServices.tokenManager,
         identity: coreServices.identity,
         httpRouter: coreServices.httpRouter,
+        httpAuth: coreServices.httpAuth,
+        auth: coreServices.auth,
       },
       async init({
         config,
@@ -46,6 +48,8 @@ export const badgesPlugin = createBackendPlugin({
         tokenManager,
         identity,
         httpRouter,
+        httpAuth,
+        auth,
       }) {
         httpRouter.use(
           await createRouter({
@@ -55,8 +59,18 @@ export const badgesPlugin = createBackendPlugin({
             discovery,
             tokenManager,
             identity,
+            httpAuth,
+            auth,
           }),
         );
+        httpRouter.addAuthPolicy({
+          path: '/entity/:entityUuid/:badgeId',
+          allow: 'unauthenticated',
+        });
+        httpRouter.addAuthPolicy({
+          path: '/entity/:namespace/:kind/:name/badge/:badgeId',
+          allow: 'unauthenticated',
+        });
       },
     });
   },

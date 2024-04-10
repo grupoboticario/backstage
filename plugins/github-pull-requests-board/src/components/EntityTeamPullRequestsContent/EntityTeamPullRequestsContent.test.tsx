@@ -71,7 +71,7 @@ jest.mock('../../hooks/usePullRequestsByTeam', () => {
         nodes: [],
       },
       commits: {
-        nodes: status,
+        nodes: [status],
       },
       isDraft: isDraft,
       author: {
@@ -96,9 +96,7 @@ jest.mock('../../hooks/usePullRequestsByTeam', () => {
           isArchived: false,
           status: {
             commit: {
-              statusCheckRollup: {
-                state: 'FAILURE',
-              },
+              statusCheckRollup: null,
             },
           },
         }),

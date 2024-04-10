@@ -5,12 +5,16 @@
 ```ts
 import { AuthenticationStrategy as AuthenticationStrategy_2 } from '@backstage/plugin-kubernetes-node';
 import { AuthMetadata as AuthMetadata_2 } from '@backstage/plugin-kubernetes-node';
+import { AuthService } from '@backstage/backend-plugin-api';
+import { BackstageCredentials } from '@backstage/backend-plugin-api';
 import { CatalogApi } from '@backstage/catalog-client';
 import { ClusterDetails as ClusterDetails_2 } from '@backstage/plugin-kubernetes-node';
 import { Config } from '@backstage/config';
 import { CustomResource as CustomResource_2 } from '@backstage/plugin-kubernetes-node';
+import { DiscoveryService } from '@backstage/backend-plugin-api';
 import { Duration } from 'luxon';
 import express from 'express';
+import { HttpAuthService } from '@backstage/backend-plugin-api';
 import * as k8sAuthTypes from '@backstage/plugin-kubernetes-node';
 import { KubernetesClustersSupplier as KubernetesClustersSupplier_2 } from '@backstage/plugin-kubernetes-node';
 import { KubernetesCredential as KubernetesCredential_2 } from '@backstage/plugin-kubernetes-node';
@@ -22,6 +26,7 @@ import { KubernetesServiceLocator as KubernetesServiceLocator_2 } from '@backsta
 import { Logger } from 'winston';
 import { ObjectToFetch as ObjectToFetch_2 } from '@backstage/plugin-kubernetes-node';
 import { PermissionEvaluator } from '@backstage/plugin-permission-common';
+import { PermissionsService } from '@backstage/backend-plugin-api';
 import { PluginEndpointDiscovery } from '@backstage/backend-common';
 import { RequestHandler } from 'http-proxy-middleware';
 import { TokenCredential } from '@azure/identity';
@@ -159,6 +164,10 @@ export class KubernetesBuilder {
     [key: string]: AuthenticationStrategy_2;
   };
   // (undocumented)
+  protected buildCatalogRelationServiceLocator(
+    clusterSupplier: KubernetesClustersSupplier_2,
+  ): KubernetesServiceLocator_2;
+  // (undocumented)
   protected buildClusterSupplier(
     refreshInterval: Duration,
   ): KubernetesClustersSupplier_2;
@@ -182,6 +191,8 @@ export class KubernetesBuilder {
   protected buildProxy(
     logger: Logger,
     clusterSupplier: KubernetesClustersSupplier_2,
+    discovery: DiscoveryService,
+    httpAuth: HttpAuthService,
   ): KubernetesProxy;
   // (undocumented)
   protected buildRouter(
@@ -190,6 +201,8 @@ export class KubernetesBuilder {
     catalogApi: CatalogApi,
     proxy: KubernetesProxy,
     permissionApi: PermissionEvaluator,
+    authService: AuthService,
+    httpAuth: HttpAuthService,
   ): express.Router;
   // (undocumented)
   protected buildServiceLocator(
@@ -207,6 +220,9 @@ export class KubernetesBuilder {
   // (undocumented)
   protected fetchClusterDetails(
     clusterSupplier: KubernetesClustersSupplier_2,
+    options: {
+      credentials: BackstageCredentials;
+    },
   ): Promise<ClusterDetails_2[]>;
   // (undocumented)
   protected getAuthStrategyMap(): {
@@ -226,6 +242,8 @@ export class KubernetesBuilder {
   protected getProxy(
     logger: Logger,
     clusterSupplier: KubernetesClustersSupplier_2,
+    discovery: DiscoveryService,
+    httpAuth: HttpAuthService,
   ): KubernetesProxy;
   // (undocumented)
   protected getServiceLocator(): KubernetesServiceLocator_2;
@@ -273,9 +291,15 @@ export type KubernetesCredential = k8sAuthTypes.KubernetesCredential;
 // @public (undocumented)
 export interface KubernetesEnvironment {
   // (undocumented)
+  auth?: AuthService;
+  // (undocumented)
   catalogApi: CatalogApi;
   // (undocumented)
   config: Config;
+  // (undocumented)
+  discovery: DiscoveryService;
+  // (undocumented)
+  httpAuth?: HttpAuthService;
   // (undocumented)
   logger: Logger;
   // (undocumented)
@@ -318,7 +342,7 @@ export class KubernetesProxy {
 
 // @public
 export type KubernetesProxyCreateRequestHandlerOptions = {
-  permissionApi: PermissionEvaluator;
+  permissionApi: PermissionsService;
 };
 
 // @public
@@ -326,6 +350,8 @@ export type KubernetesProxyOptions = {
   logger: Logger;
   clusterSupplier: KubernetesClustersSupplier;
   authStrategy: AuthenticationStrategy;
+  discovery: DiscoveryService;
+  httpAuth?: HttpAuthService;
 };
 
 // @public @deprecated (undocumented)
@@ -382,7 +408,11 @@ export class ServiceAccountStrategy implements AuthenticationStrategy_2 {
 }
 
 // @public (undocumented)
-export type ServiceLocatorMethod = 'multiTenant' | 'singleTenant' | 'http';
+export type ServiceLocatorMethod =
+  | 'multiTenant'
+  | 'singleTenant'
+  | 'catalogRelation'
+  | 'http';
 
 // @public @deprecated (undocumented)
 export type ServiceLocatorRequestContext =
